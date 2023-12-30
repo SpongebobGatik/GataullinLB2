@@ -41,6 +41,8 @@ int main() {
             break;
         case '\n':
             printf("%.8g\n", pop());
+            if (pop() != 0.0 || pop() != 0.0) printf("Problems\n");
+            else printf("Its OK\n");
             break;
         default:
             printf("error: unknown command %s\n", s);

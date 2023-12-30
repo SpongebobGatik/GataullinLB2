@@ -44,21 +44,44 @@ TreeNode* deleteNode(TreeNode* root, int key) {
     return root; // Возврат корня дерева
 }
 
-// Функция для обхода дерева "inorder"
-void inorderTraversal(TreeNode* root) {
-    if (root != NULL) {
-        inorderTraversal(root->left); // Обход левого поддерева
-        printf("%d ", root->value); // Вывод значения узла
-        inorderTraversal(root->right); // Обход правого поддерева
-    }
-}
-
 // Функция для создания нового узла
 TreeNode* newNode(int item) {
     TreeNode* temp = (TreeNode*)malloc(sizeof(TreeNode)); // Выделение памяти для нового узла
     temp->value = item; // Присвоение значения узлу
     temp->left = temp->right = NULL; // Инициализация указателей на поддеревья как NULL
     return temp; // Возврат нового узла
+}
+
+void printTree(TreeNode* root, int space) {
+    int i;
+
+    // Базовый случай: если дерево пустое
+    if (root == NULL)
+        return;
+
+    // Увеличение расстояния между уровнями
+    space += 10;
+
+    // Обработка правого поддерева сначала (вывод в обратном порядке)
+    printTree(root->right, space);
+
+    // Печать текущего узла после пробелов
+    printf("\n");
+    for (i = 10; i < space; i++)
+        printf(" ");
+    printf("%d\n", root->value);
+
+    // Обработка левого поддерева
+    printTree(root->left, space);
+}
+
+// Функция для печати дерева
+void print(TreeNode* root) {
+    // Первоначальный пробел
+    int space = 0;
+
+    // Вызов функции printTree
+    printTree(root, space);
 }
 
 int main() {
@@ -73,13 +96,13 @@ int main() {
     root->right->right = newNode(80);
 
     printf("Исходное дерево: ");
-    inorderTraversal(root); // Вывод исходного дерева
+    print(root); // Вывод исходного дерева
     printf("\n");
 
-    root = deleteNode(root, 50); // Удаление узла с ключом 50
+    root = deleteNode(root, 30); // Удаление узла с ключом 50
 
     printf("Дерево после удаления узла: ");
-    inorderTraversal(root); // Вывод дерева после удаления узла
+    print(root); // Вывод дерева после удаления узла
     printf("\n");
 
     return 0;
